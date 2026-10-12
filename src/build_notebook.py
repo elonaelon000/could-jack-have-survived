@@ -41,13 +41,40 @@ sys.path.insert(0, str(ROOT/'src'))
 from analysis import load_data, observed, jack_like, young_men, adults, family_group, wilson
 
 df = load_data(ROOT/'data'/'train.csv')
-print('Dataset shape:', df.shape)
+print('Dataset shape (passengers, columns):', df.shape)
+print('PANDAS INFO:')
+df.info()
+print('NULL VALUES:')
+print(df.isnull().sum().to_string())
+print('NULL PERCENTAGES:')
+display((df.isnull().mean()*100).round(1).rename('missing_%').to_frame())
 profile = pd.DataFrame({'dtype':df.dtypes.astype(str), 'missing':df.isna().sum(),
                         'missing_%':100*df.isna().mean()})
-display(profile.round(1))''')
+display(profile.round(1))
+print('SAMPLE RECORDS:')
+display(df.head(5))''')
 md('''**Column dictionary.** `Survived`: observed 0/1 outcome; `Pclass`: ticket class (1–3); `Sex` and `Age`: recorded demographics; `SibSp`: siblings/spouses aboard; `Parch`: parents/children aboard; `Ticket`: ticket identifier; `Fare`: ticket fare recorded; `Cabin`: cabin label; `Embarked`: port code; `PassengerId` and `Name`: passenger identifiers. **The 891 records are not the whole Titanic population, and this Kaggle training set excludes the competition test set.**
 
 **Profiling observation:** 177 ages (19.9%), 687 cabins (77.1%), and two embarkation entries (0.2%) are missing. None of those numbers reveals group survival outcomes.''')
+
+md('''### All 12 original columns explained
+
+| Column | Description | Interpretation |
+|---|---|---|
+| PassengerId | Unique integer passenger ID | Identifier, not an explanation |
+| Survived | 0 = no, 1 = yes | Binary outcome |
+| Pclass | 1, 2, or 3 | Ticket-class category |
+| Name | Passenger name | Historical record, not fictional Jack |
+| Sex | Male or female | Recorded demographic category |
+| Age | Age in years | 177 missing ages |
+| SibSp | Siblings/spouses aboard | Does not include friends |
+| Parch | Parents/children aboard | Not all travelling companions |
+| Ticket | Ticket number/reference | May be shared |
+| Fare | Recorded fare | Not an individual's income |
+| Cabin | Cabin label | Mostly missing |
+| Embarked | S, C or Q | Southampton, Cherbourg or Queenstown |
+
+**Profile conclusion:** 891 records and 12 original fields; 177 unknown ages (19.9%), 687 unknown cabins (77.1%), and 2 unknown embarkation ports (0.2%). The other nine fields have no null values. These structural checks do not demonstrate survival causes.''')
 
 md('''## 2. Three hypotheses — written before outcome exploration
 
@@ -83,6 +110,20 @@ print('No passenger was deleted from the master dataset. Age restrictions will b
 md('''## 4. Explore: distributions before relationships
 
 Start with what the sample contains, **not** with which conclusion looks attractive. Charts discarded from the final poster stay here.''')
+md('''### Statistical summary for every column
+
+Use `df.describe()` for numeric count, mean, standard deviation, quartiles and range; use `df.describe(include=['object'])` for text-column count, unique values, most frequent value and its frequency; and use `df.describe(include='all')` to cover all twelve columns. `PassengerId` is an identifier and `Pclass` is a coded category, so their arithmetic means are not meaningful continuous measurements.
+
+**Data overview:** 342/891 (38.4%) passengers survived and 549/891 (61.6%) did not. There were 577 men, 314 women; 216 first-class, 184 second-class and 491 third-class passengers. Among 714 known ages, mean age was 29.70 years, median 28, range 0.42–80. Mean recorded fare was 32.20, median 14.45, maximum 512.33. The large fare mean relative to the median suggests a strongly right-skewed distribution.
+
+**Interpretation:** These descriptive statistics summarize the training sample, not all Titanic passengers. Groups have different sizes, and age/cabin missingness limits comparisons. Test subgroup survival **rates with denominators**, not raw survival counts.''')
+code('''print('All 12 original fields — comprehensive describe:')
+display(clean[df.columns].describe(include='all').T.round(2))
+print('Text and category summary:')
+display(clean[df.columns].describe(include=['object']).T)
+for field in ['Survived','Sex','Pclass','Embarked']:
+    print('Value counts:',field)
+    display(clean[field].value_counts(dropna=False).rename('passengers').to_frame())''')
 code('''print('Descriptive statistics (recorded ages only):')
 display(clean[['Age','Fare','SibSp','Parch']].describe().round(1))
 display(pd.crosstab(clean.Pclass,clean.Sex,margins=True))
