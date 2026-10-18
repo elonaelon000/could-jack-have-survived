@@ -55,7 +55,8 @@ def wilson(successes: int, total: int, z: float = 1.96) -> tuple[float, float]:
     denominator = 1 + z*z/total
     midpoint = (p + z*z/(2*total))/denominator
     half = z*sqrt(p*(1-p)/total + z*z/(4*total*total))/denominator
-    return midpoint-half, midpoint+half
+    return (0.0 if successes == 0 else max(0.0, midpoint-half),
+            1.0 if successes == total else min(1.0, midpoint+half))
 
 
 def summaries(data: pd.DataFrame) -> dict:

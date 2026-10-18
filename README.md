@@ -1,40 +1,64 @@
 # Could Jack Have Been Saved?
 
-**Group 1 · One Page, One Finding · Presentation: 19 October 2026**
+**The Jack File** - Group 1 / One Page, One Finding  
+**Kleant Laboti | Elona Tarja | Sarita Koci**
 
-A pandas-based investigation of what the Titanic's real passenger records can—and cannot—tell us about a fictional young man in third class. **No predictive models.**
+A Titanic-themed interactive research exhibit with a reproducible pandas analysis. No trained models, individual predictions, or invented historical evidence.
+
+## Start here
+
+| Open | Purpose |
+|---|---|
+| [Interactive exhibit](docs/index.html) | Jack's story, the research finding, 54 selectable passenger profiles, and an explicitly fictional motion storyboard. Serve locally or through Pages; GitHub's file viewer does not execute HTML. |
+| [One-page PDF poster](poster/titanic_jack_poster.pdf) | Exactly three code-generated charts, visible denominators, group names, and one consequential limitation. |
+| [Canonical notebook](notebooks/titanic_jack_analysis.ipynb) | The single final analysis, executed and self-contained. |
+| [Browser-readable notebook](docs/notebook.html) | Executed cells, tables and charts without a notebook runtime. |
+| [Presentation and audit notes](docs/EXHIBIT_AUDIT.md) | What changed, the rubric, and what remains a human check. |
 
 ## One finding
 
-Only **10 of 86 (11.6%)** third-class men aged 18–25 survived in the Kaggle Titanic training sample. Among men aged 18–30, **9/22 (40.9%)** first-class, **1/41 (2.4%)** second-class, and **19/130 (14.6%)** third-class passengers survived. First class was associated with higher survival than third class for these young men, **but second class actually had a lower observed rate than third class**. This undermines the simple idea of a smooth class-based survival ladder, not the data's inability to establish causal effects.
+Only **10 of 86 (11.6%)** third-class men aged 18-25 with recorded ages survived in the Kaggle training sample. Among men aged 18-30, first class had **9/22 (40.9%)**, second **1/41 (2.4%)**, and third **19/130 (14.6%)** survivors. Class was not a simple survival ladder in this subgroup. None of these comparisons proves what would happen to a fictional Jack after changing his ticket.
 
-## Deliverables
+## Reproduce everything
 
-- [**Jupyter notebook**](notebooks/titanic_jack_analysis.ipynb): seven required sections in the assignment's exact order; original preregistered hypotheses, justified cleaning, exploration, hypothesis tests, three demonstrated data problems, and a qualified conclusion.
-- [**One-page PDF poster**](poster/titanic_jack_poster.pdf): exactly three code-generated charts, a one-sentence finding, one explanation under each chart, and one limitation.
-- [**Poster preview**](poster/preview.png): easy to view without opening the PDF.
-- [**Presentation notes**](docs/PRESENTATION_NOTES.md): suggested speaking script and answers to expected questions.
-- [**Decision log**](docs/ANALYSIS_DECISIONS.md): what we chose to put on the poster, what we cut, and why.
-
-## Dataset and reproducibility
-
-The **unchanged** `data/train.csv` is the Kaggle Titanic competition training file: 891 passengers, 12 columns. Source: https://www.kaggle.com/c/titanic/data. We do not use the competition `gender_submission.csv`, which contains example predictions rather than observed survival outcomes. See [data provenance](data/DATA_SOURCE.md).
-
-From the repository root with Python 3.10+:
+Python 3.10 or newer:
 
 ```bash
 python -m pip install -r requirements.txt
 python src/build.py
 python -m pytest -q tests
+python -m http.server 8000 --directory docs
 ```
 
-`src/build.py` regenerates the notebook, executes every cell from a clean kernel, and rebuilds the PDF and PNG. To work interactively, open `notebooks/titanic_jack_analysis.ipynb` with Jupyter Notebook or VS Code.
+Open `http://localhost:8000`. The exhibit uses plain HTML, CSS and JavaScript, no front-end build system, CDN, analytics, paid service, or external rendering dependency.
+
+The build preserves `data/train.csv`, keeps the original hypothesis generator, creates a portable notebook, executes every cell, regenerates the three-chart poster, and publishes the results to `docs/`. Website profile statistics are computed from the source data, not manually guessed.
+
+## Google Colab
+
+Download `docs/titanic_jack_analysis.ipynb`, open Google Colab, choose **File > Upload notebook**, then **Runtime > Run all**. The notebook embeds a compressed copy of the exact original CSV and the helper functions, validates the original SHA-256, and does not require a repository checkout or network data download. Pandas, NumPy and Matplotlib are its analysis dependencies.
+
+The [direct GitHub-to-Colab link](https://colab.research.google.com/github/elonaelon000/could-jack-have-survived/blob/main/notebooks/titanic_jack_analysis.ipynb) uses `main` and requires repository access. Before merging the exhibit branch, use that branch's downloaded notebook instead.
 
 ## Research integrity
 
-- The three original hypotheses were written and committed first, *before group survival analysis*, in commit [`7a423658`](https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90).
-- H1 **SURVIVED** (adult female rates higher in every class), H2 **SURVIVED** (first-class > third-class among young men), H3 **NOT SUPPORTED** (recorded relatives > none recorded among third-class men aged 18–50).
-- Those decisions are about **observed directions in this sample**, not significant causal effects. The third hypothesis was **not rewritten** after the results.
-- Age missingness, cabin missingness, and small subgroups constrain our conclusions. Jack is fictional and no one has demonstrated that changing his class would have saved him.
+The original operational definitions precede outcome exploration in commit [`7a423658`](https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90): H1 ages 18-50 within class; H2 men 18-30, first versus third; H3 third-class men 18-50, recorded close relatives versus none recorded. Jack's primary proxy remains male, third class, known age 18-25.
 
-**Group members:** [ADD ALL GROUP NAMES BEFORE SUBMISSION]
+H1 and H2 **survived in observed direction**; H3 was **not supported**. These are descriptive decisions, not claims of statistical significance. Wilson intervals do not remove selection bias, missingness, confounding, or family dependence. The alternative notebook is preserved under `archive/` and is **not** a second final or preregistered analysis.
+
+## Publishing status
+
+Implementation and publication are separate. No public URL is claimed until deployment is verified. Repository visibility is not changed by this code.
+
+To publish the built site, configure **Settings > Pages > Deploy from a branch**, choose the branch containing this work and **/docs**, then verify the resulting URL in a signed-out browser. GitHub Free requires a public repository for Pages; eligible paid plans can publish from a private source repository. The professor separately requires a repository link accessible from a private browser window.
+
+The branch build workflow regenerates and checks the deliverables, then commits only the generated files to its own branch. It does not publish a website, change permissions, or modify another branch.
+
+## Sources
+
+- [Assignment](https://evisp.github.io/ml-handbook/projects/one-page-finding/)
+- [Kaggle Titanic data](https://www.kaggle.com/c/titanic/data) and [local provenance](data/DATA_SOURCE.md)
+- [Film context: Paramount Pictures](https://www.paramountpictures.com/movies/titanic)
+- [GitHub Pages documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
+
+The story's emotional interpretation is editorial. The ship artwork and motion sequence are original stylized visuals, not film footage, an AI-generated movie, or evidence of an actual rescue.

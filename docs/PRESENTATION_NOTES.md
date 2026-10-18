@@ -1,39 +1,25 @@
-# Could Jack Have Been Saved? — Group 1 speaking guide
+# Presenting The Jack File
 
-## Suggested 90-second talk
+The interactive website is supplementary. Keep the professor's actual notebook and one-page poster at the center of the presentation.
 
-> "Our question was whether Jack could have been saved. He was fictional, so we defined a comparable passenger as a third-class man aged 18 to 25 with a known age. In the Kaggle training sample, just **10 of 86 — 11.6%** — survived.
->
-> Our first chart compares him with third-class women of the same age range: **14 of 30 women (46.7%)** survived. Being a young woman was associated with a strikingly different outcome even within Jack's class.
->
-> Next, we asked whether first class would have helped a young man. Among men aged 18 to 30, **40.9% of first-class**, **2.4% of second-class**, and **14.6% of third-class** passengers survived. First class was better than third in this sample, but we found something unexpected: second class was worse than third. The overall class ladder does not apply neatly to every subgroup.
->
-> Our final chart shows a rejected hypothesis. Among third-class men aged 18 to 50, recorded family ties did not correlate with higher survival: **3 of 33** survived with close relatives recorded, compared with **25 of 168** without. The group is small, and 'no recorded close relatives' does not mean alone.
->
-> We conclude that some Jack-like passengers survived and that class, sex and recorded family circumstances were associated with different outcomes. But we cannot prove what would have happened to an individual Jack: the dataset does not include lifeboat access or evacuation timing."
+## Opening
 
-## Questions to anticipate
+"The film asks whether Jack could fit on the floating debris. Our dataset cannot test that. Instead, we asked what happened to real passengers resembling him: men in third class aged 18 to 25. Ten of 86 survived."
 
-**Why did you choose these three charts?** They move from a direct Jack-like comparison, to the nonmonotonic class finding, to a genuinely rejected hypothesis. Rates include denominators. Other charts remain in the notebook.
+## The evidence
 
-**Why three different age ranges?** The Jack-like profile was preregistered as 18–25; H2 preregistered 18–30; H3 preregistered 18–50 so the hypothesis groups would be large enough to investigate. All are shown explicitly, not presented as interchangeable cohorts.
+1. Compare third-class men and women in the same 18-25 window: 10/86 versus 14/30.
+2. Show the original H2 window, men 18-30: first 9/22; second 1/41; third 19/130. The second-class result breaks the simple class ladder.
+3. Keep H3 visible: among third-class men 18-50, recorded relatives had 3/33 survivors versus 25/168 without recorded relatives. The registered direction was not supported.
 
-**Can you say buying first class would save Jack?** No. Ticket class correlates with other factors and we did not observe evacuation logistics or causal interventions. Our conclusion is about the survival outcomes of comparable real passengers, not a hypothetical individual's guaranteed outcome.
+## The interactive moment
 
-**Is this Simpson's paradox?** We can demonstrate a *ranking reversal* in certain subgroups relative to whole-sample class ordering; we do not claim the strict mathematical conditions for Simpson's paradox are met.
+Change the ticket class in the explorer while holding the age window fixed at 18-25. First-class young men have 3/10 survivors, not 9/22: the latter belongs to H2's wider 18-30 window. Point out the denominator before interpreting the percentage. The displayed group rate is not Jack's counterfactual probability.
 
-**Why is second-class young male survival so low?** Only one of 41 records with known ages survived in the chosen group. We cannot isolate the cause from this dataset. The rates also change with alternative age bands, and missingness may affect the results.
+## Finish
 
-**Does the rejected family hypothesis mean family makes survival worse?** No. The original directional H3 was not supported in its predefined sample; the recorded-family subgroup is small, and `SibSp`/`Parch` do not encode friends, a romantic partner or every travelling companion. Among men 18–30 in third class the group difference almost disappears.
+Explain missing ages, missing cabins and tiny comparison groups. Open the required poster. Close with: "Some people resembling Jack survived. That is a finding; a promise that one change would save him is not."
 
-**What's wrong with the data?** Missing ages unevenly distributed across classes, cabin data missing for nearly all third class, and small groups in important comparisons. Each is quantified in the notebook.
+The alternate-rescue animation is explicitly fictional. It is not a substitute for an analysis and cannot be tested using rescue timing absent from the dataset.
 
-**Why rate rather than count?** First, second and third class have different numbers of passengers; the proportion surviving is the meaningful descriptive comparison.
-
-**Why could another group get different results?** Different Jack proxy, inclusion of missing ages through imputation, wider age bands, or alternative handling of the small family group would change rates. We explicitly document our decisions.
-
-**What is the worst poster misunderstanding?** Treating 40.9% first-class survival as Jack's probability after an upgrade. It is not.
-
-**Why did you keep the rejected hypothesis?** Preserving it is the evidence of honest pre-outcome scientific thinking, as required in the marking brief.
-
-**Before presenting:** insert the 3–4 group names in the poster source footer and README, regenerate the PDF, rehearse with the full-size PDF projected, and verify your GitHub link in a private window.
+See [the audit](EXHIBIT_AUDIT.md) for the detailed reconciliation, methods caveats and remaining submission checks.
