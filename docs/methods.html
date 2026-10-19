@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Jack File | Why these age windows?</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}body{margin:0;background:#f5f1e9;color:#172a35;font:17px/1.8 system-ui,sans-serif}nav{background:#071b28;color:#ecd7b6;padding:20px max(20px,calc((100vw - 1080px)/2));display:flex;flex-wrap:wrap;gap:14px 25px}nav a{color:inherit;font-size:14px}main{max-width:1080px;padding:44px 28px 90px;margin:auto}h1,h2,h3{font-family:Georgia,serif;line-height:1.25}h1{font-size:clamp(31px,5vw,52px)}h2{font-size:29px;margin-top:50px;padding-top:26px;border-top:1px solid #c6c8bd}h3{font-size:23px}p{max-width:82ch}a{color:#695024;text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid #a87438;outline-offset:4px}pre{overflow:auto;max-width:100%;padding:22px;background:#0b2330;color:#f4e7d1;font:14px/1.7 ui-monospace,monospace;border-radius:5px}code{font-family:ui-monospace,monospace;font-size:.88em;overflow-wrap:anywhere}pre code{font-size:inherit;overflow-wrap:normal}table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid #c6c8bd}th{background:#e3e5db}.table-scroll{overflow-x:auto;margin:25px 0}.contents{border:1px solid #c6c8bd;padding:18px 22px;margin:28px 0}.contents a{display:block;font-size:15px;margin:6px 0}.contents summary{cursor:pointer;font-weight:650}.edition{font-size:13px;letter-spacing:.06em;color:#655942}blockquote{margin:24px 0;padding:2px 22px;border-left:3px solid #a98b5c;background:#e8e9df}@media(max-width:480px){body{font-size:16px}main{padding:28px 18px 60px}h2{font-size:25px}pre{padding:15px;font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style></head><body><nav><a href="index.html">The Jack File</a><a href="notebook.html">Executed notebook</a><a href="methods.html">Age windows</a><a href="notebook-guide-sq.html">Shpjegimi ne shqip</a></nav><main><p class="edition">METHODS &amp; LEARNING / 19 OCTOBER 2026</p><details class="contents"><summary>Contents</summary><a href="#section-1">They overlap; they are not three age categories</a><a href="#section-2">What each window does</a><a href="#section-3">The reasoning and its cost</a><a href="#section-4">What the website selector actually does</a><a href="#section-5">Why the original windows stay visible</a><a href="#section-6">A sentence for the presentation</a><a href="#section-7">Sources and implementation</a></details><h1>Why 18–25, 18–30 and 18–50?</h1>
+<p><strong>Methodological clarification added on 19 October 2026.</strong> This explanation was written after analysis. The age cutoffs themselves already appear in the <a href="https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90">original hypothesis commit</a>. This document does not create a new preregistration or claim that a sample-size calculation established optimal cutoffs.</p>
+<h2 id="section-1">They overlap; they are not three age categories</h2>
+<p>These are three alternative <strong>analysis windows</strong>. A 22-year-old belongs to all three, a 28-year-old to the last two, and a 42-year-old only to 18–50. Never add their denominators together as though they describe disjoint groups.</p>
+<p>The endpoints are inclusive: <code>Age.between(18, 25)</code> selects recorded ages satisfying <code>18 &lt;= Age &lt;= 25</code>. Unknown ages cannot establish membership, so those passengers are excluded from age-dependent comparisons, not deleted from the master dataset. Fractional ages are not rounded into a group.</p>
+<h2 id="section-2">What each window does</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th>Window</th>
+  <th>Full analysis population</th>
+  <th>Comparison or purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>18–25 / Jack-like</td>
+  <td>Male, third class, known age 18–25</td>
+  <td>Primary character-proxy baseline. The first poster chart also compares women and men within third class at these ages.</td>
+</tr>
+<tr>
+  <td>18–30 / H2</td>
+  <td>Male, known age 18–30</td>
+  <td>First-class versus third-class observed survival. Second class is also displayed to avoid hiding its different ranking.</td>
+</tr>
+<tr>
+  <td>18–50 / H1</td>
+  <td>All recorded classes, known age 18–50</td>
+  <td>Female versus male observed survival separately within each class.</td>
+</tr>
+<tr>
+  <td>18–50 / H3</td>
+  <td>Male, third class, known age 18–50</td>
+  <td><code>SibSp + Parch &gt; 0</code> versus <code>SibSp + Parch == 0</code>.</td>
+</tr>
+</tbody>
+</table></div>
+<p>H1 is not the same comparison as poster chart 1: H1 includes all three classes and ages 18–50, while the poster's contextual comparison uses third class and ages 18–25. The notebook reports the original H1 test separately.</p>
+<h2 id="section-3">The reasoning and its cost</h2>
+<p>The narrow window prioritizes similarity to a young fictional character. The wider windows allow broader comparisons with more passengers. That is a trade-off between specificity and sample size, not proof that the wider group is more accurate.</p>
+<p>The results illustrate the trade-off: first-class men aged 18–25 number only 10, with 3 survivors; at 18–30 there are 22, with 9 survivors. One different outcome changes the first rate by 10 percentage points. These are observations made during analysis, <strong>not evidence that those outcome counts justified the original choice in advance</strong>.</p>
+<p>The exact endpoints 25, 30 and 50 are project design choices. They are not biologically necessary boundaries or statistically optimized thresholds. Ages 18–50 are a restricted adult group, not every adult passenger. A shared age window also does not fully adjust for age: two classes can have different age distributions even inside that window.</p>
+<h2 id="section-4">What the website selector actually does</h2>
+<p>The dropdown changes only the age condition. The H1/H3 label reminds readers which registered questions use that window; selecting it does not automatically test those hypotheses.</p>
+<p>For H1, keep class fixed and compare female and male groups at ages 18–50, without restricting relatives. Repeat for each class. For H3, keep male, third class and ages 18–50 fixed, then compare one-or-more versus no recorded close relatives. For H2, keep male and ages 18–30 fixed and compare ticket classes without restricting relatives.</p>
+<p>Other combinations in the 54-profile explorer are descriptive exploration. Do not present every clicked combination as an originally registered hypothesis.</p>
+<h2 id="section-5">Why the original windows stay visible</h2>
+<p>Changing the age range can change the answer. For example, among third-class men 18–50, survival with relatives recorded is 3/33 versus 25/168 with none recorded. At 18–25 the corresponding counts are 3/11 versus 7/75. This sensitivity is informative, but the narrower result does not replace H3's registered population.</p>
+<p>Changing an age range after seeing results is allowed as a clearly labeled exploratory check. Silently replacing the original range to obtain a preferred result is not. The first hypothesis commit remains unchanged.</p>
+<h2 id="section-6">A sentence for the presentation</h2>
+<blockquote>
+<p>We used 18–25 for the closest Jack-like group and separately specified wider windows for the comparisons. This trades similarity to the character against subgroup size. The cutoffs are transparent design choices, not proven optimal boundaries, so every result is interpreted for its own population.</p>
+</blockquote>
+<h2 id="section-7">Sources and implementation</h2>
+<p>Definitions come from the <a href="https://github.com/elonaelon000/could-jack-have-survived/blob/7a423658689667bbf34772da22bb66c945d7ee90/notebooks/titanic_jack_analysis.ipynb">initial notebook</a>; counts come from the unchanged repository CSV and the <a href="https://elonaelon000.github.io/could-jack-have-survived/docs/evidence.json">generated evidence</a>. Endpoint behavior is documented by <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.between.html">pandas Series.between</a>. The original age filters, outcome values and hypothesis decisions have not been changed by this clarification.</p>
+</main></body></html>
