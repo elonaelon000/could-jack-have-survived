@@ -62,7 +62,7 @@ The portable notebook embeds the original CSV with a checksum and can be uploade
 
 ## Team and sources
 
-**Group 1 · Kleant Laboti · Elona Tarja · Sarita Koci**
+**Group 1 : Elona Tarja ·  Kleant Laboti · Sarita Koci**
 
 [Assignment](https://evisp.github.io/ml-handbook/projects/one-page-finding/) · [Kaggle dataset](https://www.kaggle.com/competitions/titanic/data) · [Original screenplay](https://imsdb.com/scripts/Titanic.html) · [Artwork attribution](https://github.com/elonaelon000/could-jack-have-survived/blob/feature/titanic-interactive-exhibit/docs/assets/ATTRIBUTION.md)
 
