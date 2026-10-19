@@ -1,0 +1,81 @@
+name: Build, test and publish the Titanic story
+on:
+  push:
+    branches: [feature/titanic-interactive-exhibit]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: titanic-story-publication
+  cancel-in-progress: true
+jobs:
+  build:
+    if: github.ref == 'refs/heads/feature/titanic-interactive-exhibit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements.txt playwright
+      - name: Install browser for real viewport checks
+        run: python -m playwright install --with-deps chromium
+      - name: Build notebook, poster, story and feature guide
+        run: python src/build.py
+      - name: Verify original data and both homepage entry points
+        run: python -m pytest -q tests
+      - name: Exercise all features in a real browser
+        run: python scripts/check_story_browser.py
+      - name: Save verified deliverables to the publishing branch
+        env:
+          TARGET_BRANCH: ${{ github.ref_name }}
+        run: |
+          cp qa/browser-report.json docs/browser-report.json
+          cp qa/hero-1440.jpg docs/preview-desktop.jpg
+          cp qa/hero-390.jpg docs/preview-mobile.jpg
+          cp qa/feature-guide.jpg docs/preview-feature-guide.jpg
+          git add index.html .nojekyll docs notebooks/titanic_jack_analysis.ipynb poster
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Build and verify the story-first homepage and feature guide [skip ci]'
+            git push origin "HEAD:$TARGET_BRANCH"
+          fi
+      - name: Assemble only the actual website for Pages
+        run: |
+          mkdir -p _site
+          cp index.html .nojekyll _site/
+          cp -a docs _site/docs
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          include-hidden-files: true
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the verified website, not the README
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: python -m pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Verify the actual public URL in a signed-out browser
+        env:
+          PUBLIC_URL: ${{ steps.deployment.outputs.page_url }}
+        run: python scripts/check_story_browser.py --url "$PUBLIC_URL"

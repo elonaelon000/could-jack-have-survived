@@ -1,0 +1,302 @@
+<!doctype html><html lang="sq"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Jack File | Notebook-u ne shqip</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}body{margin:0;background:#f5f1e9;color:#172a35;font:17px/1.8 system-ui,sans-serif}nav{background:#071b28;color:#ecd7b6;padding:20px max(20px,calc((100vw - 1080px)/2));display:flex;flex-wrap:wrap;gap:14px 25px}nav a{color:inherit;font-size:14px}main{max-width:1080px;padding:44px 28px 90px;margin:auto}h1,h2,h3{font-family:Georgia,serif;line-height:1.25}h1{font-size:clamp(31px,5vw,52px)}h2{font-size:29px;margin-top:50px;padding-top:26px;border-top:1px solid #c6c8bd}h3{font-size:23px}p{max-width:82ch}a{color:#695024;text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid #a87438;outline-offset:4px}pre{overflow:auto;max-width:100%;padding:22px;background:#0b2330;color:#f4e7d1;font:14px/1.7 ui-monospace,monospace;border-radius:5px}code{font-family:ui-monospace,monospace;font-size:.88em;overflow-wrap:anywhere}pre code{font-size:inherit;overflow-wrap:normal}table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid #c6c8bd}th{background:#e3e5db}.table-scroll{overflow-x:auto;margin:25px 0}.contents{border:1px solid #c6c8bd;padding:18px 22px;margin:28px 0}.contents a{display:block;font-size:15px;margin:6px 0}.contents summary{cursor:pointer;font-weight:650}.edition{font-size:13px;letter-spacing:.06em;color:#655942}blockquote{margin:24px 0;padding:2px 22px;border-left:3px solid #a98b5c;background:#e8e9df}@media(max-width:480px){body{font-size:16px}main{padding:28px 18px 60px}h2{font-size:25px}pre{padding:15px;font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style></head><body><nav><a href="index.html">The Jack File</a><a href="notebook.html">Executed notebook</a><a href="methods.html">Age windows</a><a href="notebook-guide-sq.html">Shpjegimi ne shqip</a></nav><main><p class="edition">METHODS &amp; LEARNING / 19 OCTOBER 2026</p><details class="contents"><summary>Permbajtja</summary><a href="#section-1">0. Çfarë po bëjmë në të vërtetë?</a><a href="#section-2">1. Struktura me shtatë pjesë</a><a href="#section-3">2. Fjalori që na duhet përpara kodit</a><a href="#section-4">3. Qeliza e kodit 1 — hapja, paketimi dhe kontrollet</a><a href="#section-5">4. Çfarë përfaqëson secila kolonë?</a><a href="#section-6">5. Funksionet ndihmëse — përkufizime që ripërdoren</a><a href="#section-7">6. Hipotezat dhe intervalet e moshës</a><a href="#section-8">7. Qeliza e kodit 2 — pastrimi pa shpikur të dhëna</a><a href="#section-9">8. Qeliza e kodit 3 — përmbledhja e kolonave</a><a href="#section-10">9. Qeliza e kodit 4 — kush gjendet në kampion?</a><a href="#section-11">10. Qeliza e kodit 5 — nga numrat te normat</a><a href="#section-12">11. Qeliza e kodit 6 — grupet e moshës dhe një kujdes teknik</a><a href="#section-13">12. Qeliza e kodit 7 — si dalin 10 dhe 86?</a><a href="#section-14">13. Qeliza e kodit 8 — H1</a><a href="#section-15">14. Qeliza e kodit 9 — H2 dhe diferenca në pikë përqindjeje</a><a href="#section-16">15. Çfarë bën wilson(k, n)?</a><a href="#section-17">16. Qeliza e kodit 10 — H3</a><a href="#section-18">17. Qeliza e kodit 11 — a ndryshon historia kur ndryshon grupi?</a><a href="#section-19">18. Qeliza e kodit 12 — tri probleme të provuara me të dhëna</a><a href="#section-20">19. Qeliza e kodit 13 — vizualizimi i mungesave</a><a href="#section-21">20. Përfundimi — çfarë mund të thuash me siguri?</a><a href="#section-22">21. Si lidhen notebook-u, posteri dhe faqja?</a><a href="#section-23">22. Provoje vetë pa e mësuar përmendësh</a><a href="#section-24">Burimet për të kontrolluar shpjegimin</a></details><h1>Notebook-u i Titanic, i shpjeguar nga fillimi</h1>
+<p><strong>Udhëzues në shqip · Group 1 · The Jack File</strong></p>
+<p>Ky është një shpjegim mësimor i notebook-ut kryesor <code>notebooks/titanic_jack_analysis.ipynb</code>, jo një analizë tjetër. Shembujt e shkurtuar më poshtë shpjegojnë kodin; nuk zëvendësojnë qelizat origjinale. Numërimi 1–13 u referohet vetëm qelizave me kod, jo qelizave me tekst. Lexoje krahas <a href="notebook.html">notebook-ut të ekzekutuar</a>.</p>
+<h2 id="section-1">0. Çfarë po bëjmë në të vërtetë?</h2>
+<p>Nuk po ndërtojmë një program që parashikon nëse Jack-u do të jetonte. Po analizojmë të dhëna të regjistruara: kush mbijetoi dhe cilat karakteristika kishin grupe të ndryshme pasagjerësh.</p>
+<p>Pyetja është: <strong>çfarë ndodhi me pasagjerë realë që i ngjanin profilit të Jack-ut?</strong> Ai është personazh imagjinar, prandaj nuk ka rresht në tabelë. Përkufizojmë një grup krahasimi: burra, klasë e tretë, moshë e njohur 18–25. Në atë grup janë 86 pasagjerë dhe 10 mbijetuan. Burimi është <code>data/train.csv</code> i pandryshuar; origjina dokumentohet në <a href="https://www.kaggle.com/competitions/titanic/data">Kaggle</a>.</p>
+<p>Një notebook është dokument që bashkon tekst, kod dhe rezultatet e ekzekutimit. Qelizat Markdown shpjegojnë; qelizat Python llogarisin. Një tabelë ose grafik poshtë kodit është rezultati, jo diçka e shkruar automatikisht nga filmi. Qelizat duhen ekzekutuar nga lart poshtë, sepse njëra krijon variabla që i përdor tjetra.</p>
+<h2 id="section-2">1. Struktura me shtatë pjesë</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th>Pjesa</th>
+  <th>Pyetja që zgjidh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1. Load and profile</td>
+  <td>Çfarë kemi marrë dhe sa e plotë është tabela?</td>
+</tr>
+<tr>
+  <td>2. Three hypotheses</td>
+  <td>Çfarë prisnim të shihnim përpara analizës së rezultateve?</td>
+</tr>
+<tr>
+  <td>3. Cleaning</td>
+  <td>Çfarë ruajmë, çfarë kontrollojmë dhe çfarë nuk shpikim?</td>
+</tr>
+<tr>
+  <td>4. Explore</td>
+  <td>Si shpërndahen pasagjerët dhe si ndryshojnë normat?</td>
+</tr>
+<tr>
+  <td>5. Test</td>
+  <td>A përputhen drejtimet e vëzhguara me hipotezat fillestare?</td>
+</tr>
+<tr>
+  <td>6. Three problems</td>
+  <td>Cilat dobësi mund t'i tregojmë me numra dhe kod?</td>
+</tr>
+<tr>
+  <td>7. Conclusion</td>
+  <td>Çfarë mbështesin të dhënat dhe çfarë jo?</td>
+</tr>
+</tbody>
+</table></div>
+<p>Faqja e projektit shërben si prezantim. Notebook-u shërben si provë: lejon dikë tjetër të ndjekë llogaritjet.</p>
+<h2 id="section-3">2. Fjalori që na duhet përpara kodit</h2>
+<p><strong><code>df</code></strong> është thjesht një emër variabli, shkurt për DataFrame. Një DataFrame është tabelë me rreshta dhe kolona. Këtu një rresht është një pasagjer. <strong><code>clean</code></strong> është kopja ku krijojmë kolona ndihmëse. <strong><code>jack</code></strong> është nën-tabela e pasagjerëve që kalojnë filtrat e Jack-ut.</p>
+<p><strong><code>pd</code></strong> është emri i shkurtër që i japim pandas. <strong><code>np</code></strong> është emri i shkurtër i NumPy. <strong><code>plt</code></strong> është emri i shkurtër i pjesës së Matplotlib që përdorim për grafikë. Këto nuk janë modele të trajnuara.</p>
+<p><strong><code>True</code> dhe <code>False</code></strong> janë përgjigje logjike: kushti plotësohet ose jo. <strong><code>NaN</code></strong> tregon vlerë të munguar; nuk do të thotë moshë zero. <strong><code>n</code></strong> është numri i pasagjerëve në grup, kurse <strong><code>k</code></strong> numri i të mbijetuarve. Në tabelat tona shfaqen shpesh si <code>passengers</code> dhe <code>survived</code>.</p>
+<h2 id="section-4">3. Qeliza e kodit 1 — hapja, paketimi dhe kontrollet</h2>
+<p>Qeliza e parë duket shumë e gjatë sepse notebook-u është bërë i përdorshëm pa shkarkuar të gjithë repository-n. Brenda saj është një kopje e kompresuar e CSV-së origjinale.</p>
+<p><code>base64.b64decode(...)</code> kthen tekstin e paketuar në byte. <code>gzip.decompress(...)</code> shpaketon ato byte. <code>hashlib.sha256(...)</code> llogarit një gjurmë të skedarit dhe e krahason me gjurmën e kopjes origjinale. <strong>Ky kontroll tregon që përdorim të njëjtin skedar; nuk provon që çdo regjistrim historik është pa gabime.</strong> Kodimi nuk është enkriptim, të dhëna të simuluara apo trajnim modeli.</p>
+<p>Pjesa analitike që duhet të kuptosh është shumë më e thjeshtë:</p>
+<pre><code class="language-python">df = load_data()
+print(df.shape)
+df.info()
+display(df.isna().sum().rename('missing').to_frame())
+display(df.head())
+</code></pre>
+<p><code>load_data()</code> lexon CSV-në dhe kthen DataFrame. <code>df.shape</code> jep <code>(891, 12)</code>: 891 rreshta dhe 12 kolona. <code>df.info()</code> tregon tipet e kolonave dhe sa vlera jo të munguara kanë. <code>df.head()</code> tregon pesë rreshtat e parë, jo të gjithë dataset-in.</p>
+<p>Te <code>df.isna().sum()</code>, fillimisht <code>isna()</code> shënon boshllëqet me <code>True</code>. Pastaj <code>sum()</code> i numëron për çdo kolonë. Rezultati është 177 mosha, 687 kabina dhe 2 porte të munguar. <code>rename('missing')</code> emërton rezultatin; <code>to_frame()</code> e paraqet si tabelë me një kolonë.</p>
+<p><code>assert</code> kontrollon një kusht dhe e ndalon kodin kur kushti është i gabuar. Për shembull, kontrollojmë që madhësia të jetë <code>(891, 12)</code>, ID-të të jenë unike dhe <code>Survived</code> të përmbajë vetëm 0 ose 1. Kjo na mbron nga përdorimi pa dashje i një skedari tjetër.</p>
+<p>Në prezantim: <strong>“Fillimisht kontrolluam strukturën, tipet dhe mungesat, pa nxjerrë përfundime për mbijetesën e grupeve.”</strong></p>
+<h2 id="section-5">4. Çfarë përfaqëson secila kolonë?</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th>Kolona</th>
+  <th>Kuptimi</th>
+  <th>Çfarë nuk duhet të supozojmë</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PassengerId</td>
+  <td>Identifikues i pasagjerit</td>
+  <td>ID më e lartë nuk do të thotë pozitë më e mirë.</td>
+</tr>
+<tr>
+  <td>Survived</td>
+  <td>0 = nuk mbijetoi, 1 = mbijetoi</td>
+  <td>Është rezultat i regjistruar, jo parashikim.</td>
+</tr>
+<tr>
+  <td>Pclass</td>
+  <td>Klasa e biletës: 1, 2 ose 3</td>
+  <td>Nuk mat e vetme pasurinë ose aksesin në varkë.</td>
+</tr>
+<tr>
+  <td>Name</td>
+  <td>Emri i pasagjerit</td>
+  <td>Nuk mund të gjejmë personazhin imagjinar Jack këtu.</td>
+</tr>
+<tr>
+  <td>Sex</td>
+  <td>Kategoria e seksit e regjistruar</td>
+  <td>Nuk regjistron vendimin e ekuipazhit për çdo njeri.</td>
+</tr>
+<tr>
+  <td>Age</td>
+  <td>Mosha në vite</td>
+  <td>Një vlerë bosh nuk është zero. Ka edhe mosha fraksionare.</td>
+</tr>
+<tr>
+  <td>SibSp</td>
+  <td>Vëllezër/motra ose bashkëshort/e në bord</td>
+  <td>Nuk numëron çdo mik apo bashkudhëtar.</td>
+</tr>
+<tr>
+  <td>Parch</td>
+  <td>Prindër ose fëmijë në bord</td>
+  <td>Nuk përshkruan gjithë rrjetin shoqëror.</td>
+</tr>
+<tr>
+  <td>Ticket</td>
+  <td>Numri ose kodi i biletës</td>
+  <td>Bileta e përbashkët nuk është ID e dyfishtë pasagjeri.</td>
+</tr>
+<tr>
+  <td>Fare</td>
+  <td>Tarifa e regjistruar</td>
+  <td>Nuk është automatikisht paga ose pasuria individuale.</td>
+</tr>
+<tr>
+  <td>Cabin</td>
+  <td>Etiketa e kabinës</td>
+  <td>Nuk na tregon ku ishte personi gjatë evakuimit.</td>
+</tr>
+<tr>
+  <td>Embarked</td>
+  <td>S, C, Q: Southampton, Cherbourg, Queenstown</td>
+  <td>Porti i hipjes nuk është kombësia ose vendi i lindjes.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Kuptimet vijnë nga fjalori i Kaggle dhe dokumentimi i projektit. Kolonat si <code>Pclass</code> kanë kode numerike, por mesatarja e tyre nuk interpretohet si një “klasë mesatare” fizike.</p>
+<h2 id="section-6">5. Funksionet ndihmëse — përkufizime që ripërdoren</h2>
+<p>Qeliza e parë përkufizon disa funksione. <code>def</code> krijon një funksion; <code>return</code> jep rezultatin. Përkufizimi nuk do të thotë se analiza është kryer: duhet ta thërrasim funksionin me të dhëna.</p>
+<p><code>jack_like(data)</code> zgjedh burra të klasës së tretë me moshë 18–25. <code>young_men(data, low=18, high=30)</code> zgjedh burra me moshë brenda kufijve, pa kufizim klase. <code>adults(data)</code> në këtë projekt zgjedh vetëm 18–50, jo çdo të rritur. <code>family_group(data)</code> zgjedh burra të klasës së tretë 18–50 dhe krijon treguesin e të afërmve. <code>wilson(k, n)</code> kthen kufirin e poshtëm dhe të sipërm të intervalit të normës.</p>
+<p>Funksioni më i përdorur është:</p>
+<pre><code class="language-python">def observed(data, keys):
+    return data.groupby(keys, observed=True, dropna=False).Survived.agg(
+        survived='sum',
+        passengers='count',
+        rate='mean'
+    )
+</code></pre>
+<p><code>keys</code> tregon sipas cilave kolona ndahet tabela. <code>groupby</code> krijon grupet; <code>Survived</code> zgjedh rezultatin që matim; <code>agg</code> kryen tri llogaritje në çdo grup. Meqë nuk mungon asnjë <code>Survived</code>, <code>count</code> këtu është numri i pasagjerëve. <code>sum</code> numëron njëshat, pra të mbijetuarit. <code>mean</code> jep normën sepse mesatarja e një kolone 0/1 është shuma e njëshave pjesëtuar me numrin e vlerave.</p>
+<p><code>observed=True</code> shmang kategoritë pa vëzhgime kur grupojmë kategori; nuk do të thotë “rezultate të provuara”. <code>dropna=False</code> lejon edhe grup për çelësa të munguar. Kjo është veçanërisht e rëndësishme kur lexojmë grupet e moshës.</p>
+<h2 id="section-7">6. Hipotezat dhe intervalet e moshës</h2>
+<p>Hipoteza është pritshmëri e shprehur përpara se të shohim krahasimin e rezultateve. Mund të mos mbështetet nga të dhënat.</p>
+<p><strong>H1:</strong> për moshat 18–50, gratë kanë normë më të lartë mbijetese se burrat brenda secilës klasë. <strong>H2:</strong> për burra 18–30, norma e klasës së parë është më e lartë se e klasës së tretë. <strong>H3:</strong> për burra të klasës së tretë 18–50, të afërmit e regjistruar lidhen me normë më të lartë mbijetese sesa mungesa e të afërmve të regjistruar.</p>
+<p>18–25 është profili i ngushtë i Jack-ut, 18–30 është dritarja e H2 dhe 18–50 përdoret te H1/H3. Këto mbivendosen. Kufijtë janë zgjedhje të projektit, jo përfundime të një optimizimi statistikor. Dritarja më e gjerë shton njerëz, por largohet nga profili i ngushtë i personazhit. <a href="methods.html">Shpjegimi i plotë i intervaleve</a>.</p>
+<p>Kufijtë ndodhen në <a href="https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90">commit-in fillestar</a>. Ky udhëzues dhe shpjegimi i hollësishëm janë shtuar më vonë; nuk duhen paraqitur sikur ekzistonin përpara rezultateve.</p>
+<h2 id="section-8">7. Qeliza e kodit 2 — pastrimi pa shpikur të dhëna</h2>
+<pre><code class="language-python">clean = df.copy()
+clean['RecordedRelatives'] = (clean.SibSp + clean.Parch) &gt; 0
+assert len(clean) == len(df)
+</code></pre>
+<p><code>copy()</code> krijon tabelën e punës. Nuk ndryshojmë CSV-në. <code>RecordedRelatives</code> është një kolonë e re logjike: të paktën një i afërm i regjistruar apo asnjë. Nëse <code>SibSp=1</code> dhe <code>Parch=0</code>, shuma është 1 dhe rezultati <code>True</code>. Nëse të dyja janë 0, rezultati është <code>False</code>.</p>
+<p><strong><code>False</code> nuk do të thotë “udhëtonte vetëm”.</strong> Mund të kishte miq ose bashkudhëtarë që këto dy kolona nuk i regjistrojnë.</p>
+<p>Qeliza kontrollon rreshtat identikë, ID-të dhe tarifat zero. Tarifë zero është sinjal për ta shqyrtuar, jo autorizim që ta fshijmë. Nuk mbushim moshat me mesataren sepse do të shpiknim se kush hyn në filtrin 18–25. Nuk fshijmë të gjithë rreshtat që kanë kabinën bosh, sepse do të humbnim pjesën më të madhe të tabelës.</p>
+<p>Të 891 pasagjerët mbeten në <code>clean</code>; filtrat krijojnë nën-tabela. Kjo është ndryshe nga fshirja e rreshtave nga të dhënat bazë.</p>
+<h2 id="section-9">8. Qeliza e kodit 3 — përmbledhja e kolonave</h2>
+<p><code>describe(include='all')</code> përmbledh të gjitha kolonat. Te numrat shohim <code>count</code>, <code>mean</code>, <code>std</code>, <code>min</code>, kuartilet dhe <code>max</code>. <code>mean</code> është mesatarja; 50% është mediana; 25% dhe 75% tregojnë kuartilet. Te teksti shfaqen numri i vlerave të ndryshme, më e shpeshta (<code>top</code>) dhe sa herë shfaqet (<code>freq</code>). Boshllëqet në këtë përmbledhje mund të tregojnë statistikë të pazbatueshme për atë tip, jo domosdoshmërisht mungesë në CSV.</p>
+<p><code>.T</code> ndërron rreshtat me kolonat vetëm për paraqitjen. <code>.round(2)</code> rrumbullakos shfaqjen; nuk duhet të rrumbullakosim të dhënat bazë përpara llogaritjeve.</p>
+<p><code>value_counts(dropna=False)</code> numëron sa herë shfaqet secila vlerë dhe nuk fsheh kategorinë e munguar. <code>rename(...).to_frame()</code> e bën rezultatin më të lexueshëm. Cikli <code>for field in [...]</code> përsërit të njëjtën procedurë për disa kolona.</p>
+<h2 id="section-10">9. Qeliza e kodit 4 — kush gjendet në kampion?</h2>
+<p>Kjo qelizë shfaq statistika për moshën, tarifën dhe familjen, një tabelë klasë × seks me <code>pd.crosstab</code>, dhe tre grafikë: shpërndarjen e moshës, numrat sipas klasës dhe numrat sipas seksit.</p>
+<p>Histograma e moshës numëron sa njerëz bien në intervale të vogla; nuk mat ende mbijetesën. <code>Age.dropna()</code> heq moshat e panjohura vetëm nga ky vizatim. <code>bins=24</code> krijon intervale vizatimi, jo 24 hipoteza. Grafikët e klasës dhe seksit tregojnë madhësinë e grupeve, që më pas të mos ngatërrojmë numrat me normat.</p>
+<p>Te <code>fig, axes = plt.subplots(1, 3, ...)</code>, <code>fig</code> është figura e plotë dhe <code>axes</code> janë tre zonat e vizatimit. <code>axes[0]</code> është grafiku i parë. <code>xlabel</code>, <code>ylabel</code>, <code>title</code> vendosin etiketat; <code>tight_layout()</code> rregullon hapësirat; <code>show()</code> shfaq figurën. Ngjyra ndryshon pamjen, jo llogaritjen.</p>
+<h2 id="section-11">10. Qeliza e kodit 5 — nga numrat te normat</h2>
+<p>Në të gjithë kampionin kemi 342 të mbijetuar nga 891: rreth 38.4%. Pastaj <code>observed(clean, ['Pclass','Sex'])</code> llogarit normën për çdo kombinim klasë–seks.</p>
+<p><code>unstack('Sex')</code> e kthen nivelin e seksit në kolona, që gratë dhe burrat të vizatohen krah për krah. <code>PercentFormatter(1)</code> e shfaq 0.4 si 40%, ndërsa vlera numerike mbetet 0.4. <code>set_ylim(0,1)</code> vendos boshtin nga 0% në 100%.</p>
+<p>Një klasë mund të ketë më shumë të mbijetuar vetëm sepse ka më shumë pasagjerë. Prandaj krahasimi kryesor është <strong>të mbijetuar / pasagjerë</strong>, jo vetëm të mbijetuar. Numëruesin dhe emëruesin i tregojmë bashkë.</p>
+<h2 id="section-12">11. Qeliza e kodit 6 — grupet e moshës dhe një kujdes teknik</h2>
+<p><code>pd.cut</code> krijon kolonën ndihmëse <code>AgeBand</code> për eksplorim. Nuk është dropdown-i me tre dritare të mbivendosura. Këto intervale të grafikut e ndajnë moshën në kategori.</p>
+<p>Në kodin ekzistues kufijtë janë <code>[-0.01, 12, 17, 25, 35, 50, 65, 110]</code>. Me parametrat e përdorur, intervalet mbyllen djathtas: për shembull, midis 17 dhe 25 kemi <strong>17 &lt; Age &lt;= 25</strong>. Etiketa e shkurtuar “18–25” në atë grafik nuk e ndryshon këtë kusht dhe mund të jetë e pasaktë për një moshë fraksionare si 17.5. <strong>Hipotezat përdorin <code>Age.between(18, ...)</code>, jo etiketën <code>AgeBand</code>, ndaj ky dallim nuk e ripërcakton grupin e Jack-ut.</strong></p>
+<p>Gjithashtu, <code>observed(..., dropna=False)</code> mund të shfaqë grupin me moshë të panjohur si <code>nan</code>. Ai nuk është interval moshe; lexoje si “moshë e paregjistruar”, pavarësisht shënimit të shkurtër që printon qeliza. Ky udhëzues i bën kufijtë realë të qartë pa ndryshuar kodin origjinal. Sjellja dokumentohet te <a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html">pandas.cut</a>.</p>
+<p>Në fund qeliza jep edhe normat sipas të afërmve në të gjithë tabelën. Ai është eksplorim i përgjithshëm, <strong>jo testi H3</strong>, i cili ka filtra shtesë.</p>
+<h2 id="section-13">12. Qeliza e kodit 7 — si dalin 10 dhe 86?</h2>
+<p>Kodi thërret <code>jack_like(clean)</code>. I shkruar hapur, filtri ka këtë kuptim:</p>
+<pre><code class="language-python">mask = (
+    (clean['Sex'] == 'male')
+    &amp; (clean['Pclass'] == 3)
+    &amp; clean['Age'].between(18, 25)
+)
+jack = clean.loc[mask]
+</code></pre>
+<p><code>==</code> pyet për barazi; <code>=</code> cakton një vlerë. <code>&amp;</code> kërkon që kushtet të jenë të vërteta së bashku për të njëjtin rresht. Kllapat ndajnë kushtet. <code>.loc[mask]</code> ruan rreshtat ku rezultati është <code>True</code>. Për këtë lloj filtrimi nuk zëvendësojmë <code>&amp;</code> me <code>and</code>.</p>
+<pre><code class="language-python">n = len(jack)                  # 86 pasagjere
+k = int(jack['Survived'].sum()) # 10 te mbijetuar
+rate = jack['Survived'].mean()  # 10 / 86
+</code></pre>
+<p><code>rate</code> është afërsisht 0.1163. Formati <code>:.1%</code> e shfaq 11.6%, me një shifër dhjetore; nuk e shumëzojmë edhe një herë me 100 para këtij formati.</p>
+<p>Qeliza provon edhe kufijtë e sipërm 25, 30 dhe 35 në një cikël. Këto janë kontrolle eksploruese të ndjeshmërisë. Në fund krahason gra dhe burra të klasës së tretë 18–25: 14/30 gra dhe 10/86 burra mbijetuan. Ky është konteksti i grafikut të parë të posterit, jo H1 i plotë.</p>
+<h2 id="section-14">13. Qeliza e kodit 8 — H1</h2>
+<p><code>adults(clean)</code> ruan 18–50. <code>observed(..., ['Pclass','Sex'])</code> llogarit normat për secilën klasë dhe seks. Një indeks me këta dy nivele lejon <code>h1.loc[(c, 'female')]</code> të marrë gratë e klasës <code>c</code>.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th>Klasa</th>
+  <th>Gra</th>
+  <th>Burra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>62/64 = 96.9%</td>
+  <td>31/71 = 43.7%</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>54/59 = 91.5%</td>
+  <td>5/76 = 6.6%</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>27/66 = 40.9%</td>
+  <td>28/201 = 13.9%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cikli krahason normat e grave dhe burrave në çdo klasë dhe ruan rezultatet logjike në një listë. <code>all(h1_outcomes)</code> është <code>True</code> vetëm kur të tria krahasimet kanë drejtimin e pritur. Prandaj H1 shënohet <strong>SURVIVED</strong>.</p>
+<p>Kjo tregon lidhjen në të dhënat tona. Nuk provon mekanizmin që e shkaktoi për secilin pasagjer dhe nuk përjashton dallimet e moshës brenda intervalit.</p>
+<h2 id="section-15">14. Qeliza e kodit 9 — H2 dhe diferenca në pikë përqindjeje</h2>
+<p>Filtri mban burra 18–30; grupimi është sipas klasës.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th>Klasa</th>
+  <th>Të mbijetuar / pasagjerë</th>
+  <th>Norma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>9/22</td>
+  <td>40.9%</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1/41</td>
+  <td>2.4%</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>19/130</td>
+  <td>14.6%</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>h2.loc[1,'rate']</code> merr normën e klasës 1. Diferenca kundrejt klasës 3 llogaritet si:</p>
+<pre><code class="language-python">gap = 100 * (h2.loc[1, 'rate'] - h2.loc[3, 'rate'])
+</code></pre>
+<p>Rezultati është rreth <strong>+26.3 pikë përqindjeje</strong>, jo automatikisht “26.3% më shumë”. Diferenca relative do të kishte formulë tjetër. Meqë diferenca është pozitive, H2 përputhet me drejtimin e pritur.</p>
+<p>Klasa 2 shfaqet gjithashtu: është më poshtë se klasa 3. Kjo kundërshton një shkallëzim të thjeshtë 1 &gt; 2 &gt; 3, por <strong>nuk kundërshton H2</strong>, që pyet vetëm nëse 1 &gt; 3. <code>iterrows()</code> na lejon të kalojmë rreshtat e tabelës për të printuar numrat dhe intervalet. Grafiku e vizaton këtë krahasim.</p>
+<h2 id="section-16">15. Çfarë bën <code>wilson(k, n)</code>?</h2>
+<p>Funksioni jep një interval afërsisht 95% për një përpjesëtim, nën një model binomial. Kodi përdor <code>z=1.96</code>, normën <code>p=k/n</code>, një qendër të korrigjuar dhe gjysmën e gjerësisë së intervalit. Për grupe shumë të vogla intervali zakonisht është i gjerë; 3 nga 10 njerëz nuk mbështesin një normë me saktësi të lartë.</p>
+<p>Nuk duhet ta shpjegosh si “Jack-u kishte 95% mundësi të binte brenda këtyre kufijve”. Nën supozimet e modelit, procedura synon mbulim rreth 95% në përsëritje të kampionimit. Këtu kemi një kampion historik të kufizuar; intervali nuk e korrigjon përzgjedhjen, mungesat, varësinë familjare apo faktorët e paregjistruar.</p>
+<p>Notebook-u <strong>nuk llogarit një p-value për H1/H2/H3</strong>. Statuset bazohen në drejtimin e vëzhguar. Mbivendosja e dy intervaleve të veçanta nuk është vetë test i vlefshëm i diferencës së normave.</p>
+<h2 id="section-17">16. Qeliza e kodit 10 — H3</h2>
+<p><code>family_group(clean)</code> mban burra të klasës së tretë 18–50 dhe shton treguesin e të afërmve. Grupi <code>True</code> ka të paktën një të afërm të regjistruar; <code>False</code> ka zero të afërm të regjistruar në ato dy kolona.</p>
+<p>Me të afërm të regjistruar: <strong>3/33 = 9.1%</strong>. Pa të afërm të regjistruar: <strong>25/168 = 14.9%</strong>. Diferenca “me minus pa” është rreth <strong>−5.8 pikë përqindjeje</strong>.</p>
+<p>H3 priste normë më të lartë për grupin me të afërm. Në këtë popullatë të përcaktuar, drejtimi është i kundërt, ndaj rezultati shënohet <strong>NOT SUPPORTED</strong>. Nuk shkruajmë se familja shkakton vdekje, nuk ka rëndësi, apo se personat pa të afërm udhëtonin vetëm. Asnjërën nga këto nuk e kemi provuar.</p>
+<h2 id="section-18">17. Qeliza e kodit 11 — a ndryshon historia kur ndryshon grupi?</h2>
+<p>Krahasojmë normat e klasave në gjithë tabelën me normat te burrat e rinj. Pastaj cikli ndryshon kufirin e sipërm të moshës në 25, 30, 35 dhe 50 dhe printon sërish numëruesit dhe emëruesit. Një kontroll tjetër përsërit krahasimin familjar për 18–30, ndryshe nga H3 e regjistruar 18–50.</p>
+<p>Ky është kontroll ndjeshmërie: <strong>sa varet përfundimi nga përkufizimi i grupit?</strong> Nuk kërkojmë fshehurazi intervalin që jep përfundimin më të bukur. Ruajmë rezultatin fillestar dhe i etiketojmë të tjerat si eksplorim.</p>
+<p>Fakti që renditja e klasës 2 dhe 3 ndryshon në një nëngrup quhet këtu përmbysje renditjeje. Nuk pretendojmë automatikisht se kemi demonstruar kushtet e plota të paradoksit të Simpson-it.</p>
+<h2 id="section-19">18. Qeliza e kodit 12 — tri probleme të provuara me të dhëna</h2>
+<p><strong>Mosha:</strong> grupojmë sipas klasës dhe seksit. <code>missing=lambda s: int(s.isna().sum())</code> përkufizon një funksion të vogël që numëron boshllëqet e grupit. <code>total='size'</code> numëron të gjithë rreshtat, përfshirë moshat bosh. <code>fraction_missing</code> është pjesa që mungon.</p>
+<p><code>pd.crosstab(..., normalize='index')</code> e kthen secilin rresht në përpjesëtime. Kjo tregon pjesën me moshë të njohur dhe të panjohur për secilin rezultat mbijetese. Ndryshimet e vëzhguara nuk provojnë pse mungojnë moshat; veçanërisht nuk mjaftojnë për të deklaruar një mekanizëm të caktuar MAR ose MNAR.</p>
+<p><strong>Kabina:</strong> e njëjta ide sipas klasës. Klasës 1 i mungojnë 40/216 kabina (18.5%); klasës 2, 168/184 (91.3%); klasës 3, 479/491 (97.6%). Mungesa nuk është e krahasueshme ndërmjet klasave.</p>
+<p><strong>Grupet e vogla:</strong> shfaqim madhësitë dhe intervalet Wilson. H2 ka vetëm 22 burra të klasës së parë, ndërsa grupi H3 me të afërm ka 33. Nuk trajtojmë të gjitha përqindjet si njësoj të sakta.</p>
+<h2 id="section-20">19. Qeliza e kodit 13 — vizualizimi i mungesave</h2>
+<p>Këtu vizatohen dy grafikë: përqindja e moshave që mungojnë sipas klasës dhe përqindja e kabinave që mungojnë sipas klasës. <code>apply(lambda s: 100 * s.isna().mean())</code> llogarit përqindjen për secilin grup.</p>
+<p>Boshti vertikal <strong>nuk është norma e mbijetesës</strong>, por përqindja e të dhënave të munguara. Një shtyllë më e lartë do të thotë më pak informacion të regjistruar për atë kolonë. Grafikët e notebook-ut mund të jenë më shumë se tre; kërkesa për saktësisht tre grafikë zbatohet te posteri.</p>
+<h2 id="section-21">20. Përfundimi — çfarë mund të thuash me siguri?</h2>
+<p>Mund të thuash: <strong>“Në kampionin tonë, 10 nga 86 pasagjerë të profilit të Jack-ut mbijetuan. H1 dhe H2 përputhen me drejtimet e pritura, kurse H3 jo. Rezultatet ndryshojnë sipas përkufizimit të grupit, dhe nuk provojnë se një ndryshim i vetëm do ta shpëtonte Jack-un.”</strong></p>
+<p>Nuk duhet të thuash: “Jack-u kishte saktësisht 11.6% shans”, “klasa e parë do ta kishte shpëtuar”, “familja ul shanset” ose “kemi trajnuar një model”. Këto e tejkalojnë analizën.</p>
+<p><strong>Lidhje nuk është shkakësi.</strong> Klasa e biletës mund të bashkëshoqërohet me moshën, seksin, vendndodhjen dhe rrethana të tjera. Ne nuk kemi vendosur rastësisht njerëz në klasa dhe nuk kemi regjistruar aksesin individual në varka apo kohën e evakuimit.</p>
+<h2 id="section-22">21. Si lidhen notebook-u, posteri dhe faqja?</h2>
+<p><code>src/analysis.py</code> përmban filtrat dhe llogaritjet e përbashkëta. <code>src/build_notebook.py</code> krijon përmbajtjen e notebook-ut. <code>src/build_exhibit.py</code> e bën të përdorshëm më vete, e ekzekuton dhe prodhon të dhënat e faqes. <code>src/make_poster.py</code> prodhon posterin. <code>src/publish_story.py</code> shton faqen e historisë dhe përmbledhjet e veçorive. <code>src/document_methods.py</code> shton sqarimet dhe këtë udhëzues, pa ndryshuar qelizat llogaritëse.</p>
+<p>Faqja ka 54 kombinime: 2 kategori seksi × 3 klasa × 3 dritare moshe × 3 zgjedhje për të afërmit. Ajo afishon përmbledhje të llogaritura, jo një model që mëson. Paneli i porteve dhe disa përmbledhje të veçorive janë eksplorim shtesë i faqes; mos i paraqit si hipoteza origjinale të notebook-ut.</p>
+<p>Testet automatike kontrollojnë numrat, grupet, skedarin origjinal, notebook-un dhe lidhjet. Kalimi i testeve tregon se këto kontrolle funksionuan, jo se profesori e ka vlerësuar projektin ose se të gjitha pretendimet historike janë provuar.</p>
+<h2 id="section-23">22. Provoje vetë pa e mësuar përmendësh</h2>
+<p>Pas ekzekutimit të qelizës së parë, provo:</p>
+<pre><code class="language-python">print(df.shape)
+print(df['Survived'].sum())
+print(df['Age'].isna().sum())
+</code></pre>
+<p>Duhet të shohësh <code>(891, 12)</code>, <code>342</code> dhe <code>177</code>. Pastaj shkruaj vetë filtrin e Jack-ut dhe llogarit <code>len</code>, <code>sum</code> dhe <code>mean</code>. Para ekzekutimit, shpjego me një fjali çfarë pret të numërojë secili.</p>
+<p>Ndrysho vetëm kufirin e sipërm në 30. Tani grupi është tjetër: 130 burra të klasës së tretë, 19 të mbijetuar. Mos thuaj që ndryshoi shansi i të njëjtëve 86 njerëz; ti ndryshove njerëzit që përfshihen.</p>
+<p>Për vetëkontroll: a mund të shpjegosh pse <code>mean()</code> jep normën, pse një moshë bosh nuk plotësohet automatikisht, pse H3 nuk u mbështet, dhe pse 40.9% − 14.6% është diferencë në pikë përqindjeje? Këto përgjigje vlejnë më shumë se memorizimi i gjithë kodit.</p>
+<h2 id="section-24">Burimet për të kontrolluar shpjegimin</h2>
+<p>Përmbajtja dhe numrat vijnë nga <a href="notebook.html">notebook-u i projektit</a>, skedari i pandryshuar <code>train.csv</code>, <a href="evidence.json">evidence.json</a> dhe <a href="https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90">commit-i i hipotezave</a>.</p>
+<p>Sjellja e funksioneve mund të kontrollohet te dokumentacioni zyrtar: <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.between.html">pandas Series.between</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.cut.html">pandas.cut</a>, <a href="https://pandas.pydata.org/docs/user_guide/groupby.html">pandas GroupBy</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html">pandas describe</a>, dhe <a href="https://matplotlib.org/stable/tutorials/pyplot.html">Matplotlib pyplot</a>.</p>
+</main></body></html>

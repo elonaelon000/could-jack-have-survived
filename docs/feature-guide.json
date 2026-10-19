@@ -1,0 +1,150 @@
+{
+  "schema": "story-first-v2",
+  "source": "Unchanged repository data/train.csv; new descriptive feature guide, not new preregistration.",
+  "sha256": "7d118fef8b6ccf7f81111877bc388536f7b1e498a655e3d649d19aaa010e9f6f",
+  "classes": [
+    {
+      "label": "First class",
+      "n": 216,
+      "k": 136
+    },
+    {
+      "label": "Second class",
+      "n": 184,
+      "k": 87
+    },
+    {
+      "label": "Third class",
+      "n": 491,
+      "k": 119
+    }
+  ],
+  "young_men": [
+    {
+      "label": "First class",
+      "n": 22,
+      "k": 9
+    },
+    {
+      "label": "Second class",
+      "n": 41,
+      "k": 1
+    },
+    {
+      "label": "Third class",
+      "n": 130,
+      "k": 19
+    }
+  ],
+  "sexes": [
+    {
+      "label": "Female",
+      "n": 314,
+      "k": 233
+    },
+    {
+      "label": "Male",
+      "n": 577,
+      "k": 109
+    }
+  ],
+  "age_bands": [
+    {
+      "label": "0-12",
+      "n": 69,
+      "k": 40
+    },
+    {
+      "label": ">12-<18",
+      "n": 44,
+      "k": 21
+    },
+    {
+      "label": "18-25",
+      "n": 188,
+      "k": 63
+    },
+    {
+      "label": ">25-40",
+      "n": 263,
+      "k": 111
+    },
+    {
+      "label": ">40",
+      "n": 150,
+      "k": 55
+    }
+  ],
+  "age_known": 714,
+  "age_missing": 177,
+  "age_mean": 29.69911764705882,
+  "age_median": 28.0,
+  "family_h3": [
+    {
+      "label": "None recorded",
+      "n": 168,
+      "k": 25
+    },
+    {
+      "label": "Relatives recorded",
+      "n": 33,
+      "k": 3
+    }
+  ],
+  "ports": [
+    {
+      "label": "Southampton",
+      "n": 644,
+      "k": 217,
+      "code": "S"
+    },
+    {
+      "label": "Cherbourg",
+      "n": 168,
+      "k": 93,
+      "code": "C"
+    },
+    {
+      "label": "Queenstown",
+      "n": 77,
+      "k": 30,
+      "code": "Q"
+    }
+  ],
+  "ports_missing": 2,
+  "cabins": [
+    {
+      "label": "First class",
+      "n": 216,
+      "missing": 40
+    },
+    {
+      "label": "Second class",
+      "n": 184,
+      "missing": 168
+    },
+    {
+      "label": "Third class",
+      "n": 491,
+      "missing": 479
+    }
+  ],
+  "fare": {
+    "median": 14.4542,
+    "max": 512.3292
+  },
+  "columns": [
+    "PassengerId",
+    "Survived",
+    "Pclass",
+    "Name",
+    "Sex",
+    "Age",
+    "SibSp",
+    "Parch",
+    "Ticket",
+    "Fare",
+    "Cabin",
+    "Embarked"
+  ]
+}
