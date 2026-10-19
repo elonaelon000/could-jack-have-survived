@@ -1,4 +1,7 @@
-"""Single entry point: rebuild the notebook, poster and interactive exhibit."""
-from build_exhibit import main
+"""Build the research deliverables and both entry points of the story-first site."""
+from build_exhibit import main as build_research
+from publish_story import main as publish_story
+
 if __name__ == '__main__':
-    main()
+    build_research()
+    publish_story()
