@@ -1,26 +1,56 @@
 # Could Jack Have Been Saved?
 
-**Group 1 · One Page, One Finding · Presentation: 19 October 2026**
+**The Jack File · Storytelling, data analysis, and front-end design**
 
-A pandas-based investigation of what the Titanic's real passenger records can—and cannot—tell us about a fictional young man in third class. **No predictive models.**
+### [Explore the live Titanic website →](https://elonaelon000.github.io/could-jack-have-survived/)
 
-## One finding
+[Read the executed notebook](https://elonaelon000.github.io/could-jack-have-survived/docs/notebook.html) · [Open the one-page poster](https://elonaelon000.github.io/could-jack-have-survived/docs/titanic_jack_poster.pdf) · [Open in Google Colab](https://colab.research.google.com/github/elonaelon000/could-jack-have-survived/blob/feature/titanic-interactive-exhibit/notebooks/titanic_jack_analysis.ipynb)
 
-Only **10 of 86 (11.6%)** third-class men aged 18–25 survived in the Kaggle Titanic training sample. Among men aged 18–30, **9/22 (40.9%)** first-class, **1/41 (2.4%)** second-class, and **19/130 (14.6%)** third-class passengers survived. First class was associated with higher survival than third class for these young men, **but second class actually had a lower observed rate than third class**. This undermines the simple idea of a smooth class-based survival ladder, not the data's inability to establish causal effects.
+[![The live Titanic website opens with Jack's story](https://raw.githubusercontent.com/elonaelon000/could-jack-have-survived/feature/titanic-interactive-exhibit/docs/preview-desktop.jpg)](https://elonaelon000.github.io/could-jack-have-survived/)
 
-## Deliverables
+The film asks us to imagine a different ending. This project asks what the real passenger records can support. Start with Jack's story, understand the dataset, and explore the evidence through an interactive Titanic-themed website.
 
-- [**Jupyter notebook**](notebooks/titanic_jack_analysis.ipynb): seven required sections in the assignment's exact order; original preregistered hypotheses, justified cleaning, exploration, hypothesis tests, three demonstrated data problems, and a qualified conclusion.
-- [**One-page PDF poster**](poster/titanic_jack_poster.pdf): exactly three code-generated charts, a one-sentence finding, one explanation under each chart, and one limitation.
-- [**Poster preview**](poster/preview.png): easy to view without opening the PDF.
-- [**Presentation notes**](docs/PRESENTATION_NOTES.md): suggested speaking script and answers to expected questions.
-- [**Decision log**](docs/ANALYSIS_DECISIONS.md): what we chose to put on the poster, what we cut, and why.
+**Jack is fictional. The 891 passenger records are real. No predictive model is trained, and no comparison establishes his individual fate.**
 
-## Dataset and reproducibility
+## The finding
 
-The **unchanged** `data/train.csv` is the Kaggle Titanic competition training file: 891 passengers, 12 columns. Source: https://www.kaggle.com/c/titanic/data. We do not use the competition `gender_submission.csv`, which contains example predictions rather than observed survival outcomes. See [data provenance](data/DATA_SOURCE.md).
+Among third-class men aged **18–25 with recorded ages**, **10 of 86 survived (11.6%)**. Among men aged **18–30**, the recorded rates were **9/22 in first class, 1/41 in second, and 19/130 in third**. First class exceeded third in that comparison, but class was not a simple survival ladder.
 
-From the repository root with Python 3.10+:
+## Why three age ranges?
+
+These are **overlapping analysis windows, not three separate age categories**. A 22-year-old belongs to all three. Bounds are inclusive; passengers with unknown ages are excluded only from age-dependent comparisons.
+
+| Window | Purpose | Trade-off |
+|---|---|---|
+| **18–25 · Jack-like** | Male, third-class baseline, close to the young fictional character. | A narrower profile, but small comparison groups. |
+| **18–30 · H2** | Compare first- and third-class young men; also show second class. | Includes more passengers while retaining a young-adult window. |
+| **18–50 · H1 and H3** | H1 compares women and men within each class; H3 compares recorded relatives versus none among third-class men. | Broader adult groups, less specific to Jack; not all adult ages. |
+
+The operational definitions were recorded in [the original hypothesis commit](https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90). **The explanation above is a later methodological clarification, not a new preregistration.** The cutoffs are design choices, not statistically optimized boundaries. A larger group is not automatically a better comparison, and a shared age window does not fully control for age.
+
+The website selector changes **only the age filter**. Choosing an H1/H3 window does not perform those comparisons by itself; sex, class and recorded-relative filters still matter.
+
+[Read the full age-window explanation](https://elonaelon000.github.io/could-jack-have-survived/docs/methods.html)
+
+## Explore the work
+
+The website combines a story-first introduction, six dataset-feature panels, 54 passenger-profile combinations with denominators and uncertainty, and direct access to the research deliverables. The optional alternate-rescue sequence is an explicitly fictional browser animation, not historical footage or an AI-generated film.
+
+**Learning the analysis:** [Notebook explained in Albanian, code cell by code cell](https://elonaelon000.github.io/could-jack-have-survived/docs/notebook-guide-sq.html).
+
+H1 and H2 agree with the registered **observed directions**; H3 is **not supported** in its registered group. These are descriptive checks, not claims of statistical significance or causation. Unknown ages, missing cabins, and small subgroups remain substantive limitations.
+
+## Run locally
+
+The live implementation and updated deliverables are on **`feature/titanic-interactive-exhibit`** while [PR #1](https://github.com/elonaelon000/could-jack-have-survived/pull/1) remains separate from the original analysis on `main`.
+
+```bash
+git clone --branch feature/titanic-interactive-exhibit https://github.com/elonaelon000/could-jack-have-survived.git
+cd could-jack-have-survived
+python -m http.server 8000 --directory docs
+```
+
+Open `http://localhost:8000`. To rebuild the notebook, poster, website and learning notes with Python 3.10+:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -28,13 +58,12 @@ python src/build.py
 python -m pytest -q tests
 ```
 
-`src/build.py` regenerates the notebook, executes every cell from a clean kernel, and rebuilds the PDF and PNG. To work interactively, open `notebooks/titanic_jack_analysis.ipynb` with Jupyter Notebook or VS Code.
+The portable notebook embeds the original CSV with a checksum and can be uploaded to Google Colab. No repository checkout is required for that downloaded notebook.
 
-## Research integrity
+## Team and sources
 
-- The three original hypotheses were written and committed first, *before group survival analysis*, in commit [`7a423658`](https://github.com/elonaelon000/could-jack-have-survived/commit/7a423658689667bbf34772da22bb66c945d7ee90).
-- H1 **SURVIVED** (adult female rates higher in every class), H2 **SURVIVED** (first-class > third-class among young men), H3 **NOT SUPPORTED** (recorded relatives > none recorded among third-class men aged 18–50).
-- Those decisions are about **observed directions in this sample**, not significant causal effects. The third hypothesis was **not rewritten** after the results.
-- Age missingness, cabin missingness, and small subgroups constrain our conclusions. Jack is fictional and no one has demonstrated that changing his class would have saved him.
+**Group 1 · Kleant Laboti · Elona Tarja · Sarita Koci**
 
-**Group members:** [ADD ALL GROUP NAMES BEFORE SUBMISSION]
+[Assignment](https://evisp.github.io/ml-handbook/projects/one-page-finding/) · [Kaggle dataset](https://www.kaggle.com/competitions/titanic/data) · [Original screenplay](https://imsdb.com/scripts/Titanic.html) · [Artwork attribution](https://github.com/elonaelon000/could-jack-have-survived/blob/feature/titanic-interactive-exhibit/docs/assets/ATTRIBUTION.md)
+
+The historical artwork is a public-domain interpretation of the sinking; it is not a photograph or a reconstruction of passengers' evacuation routes.
